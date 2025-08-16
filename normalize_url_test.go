@@ -12,28 +12,28 @@ func TestNormalizeURL(t *testing.T) {
 	}{
 		{
 			name: 		"remove scheme",
-			inputURL: 		"https://blog.boot.dev/path",
+			inputURL: 	"https://blog.boot.dev/path",
 			expected: 	"blog.boot.dev/path",
 		},
 		{
 			name: 		"remove sercure",
-			inputURL: 		"https://blog.boot.dev/path",
-			expected: 	"http://blog.boot.dev/path",
+			inputURL:	"https://blog.boot.dev/path",
+			expected: 	"blog.boot.dev/path",
 		},
 		{
 			name: 		"remove terminal slash",
-			inputURL: 		"https://blog.boot.dev/path/",
-			expected: 	"https://blog.boot.dev/path",
+			inputURL: 	"https://blog.boot.dev/path/",
+			expected: 	"blog.boot.dev/path",
 		},
 		{
 			name: 		"remove scheme and slash",
-			inputURL: 		"https://blog.boot.dev/path/",
+			inputURL: 	"https://blog.boot.dev/path/",
 			expected: 	"blog.boot.dev/path",
 		},
 		{
 			name: 		"remove secure and slash",
-			inputURL: 		"http://blog.boot.dev/path/",
-			expected: 	"http://blog.boot.dev/path",
+			inputURL:	"http://blog.boot.dev/path/",
+			expected: 	"blog.boot.dev/path",
 		},
 	}
 
