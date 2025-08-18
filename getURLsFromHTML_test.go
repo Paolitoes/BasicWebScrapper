@@ -6,7 +6,7 @@ import (
 )
 
 
-func TestgetURLsFromHTML() {
+func TestGetURLsFromHTML(t *testing.T) {
 	test := []struct {
 		name		string
 		inputURL	string
@@ -16,7 +16,7 @@ func TestgetURLsFromHTML() {
 		{
 			name: 		"absolute and relative URLs",
 			inputURL: 	"https://blog.boot.dev",
-			inputBody: '
+			inputBody: `
 				<html>
 					<body>
 						<a href="/path/one">
@@ -27,15 +27,15 @@ func TestgetURLsFromHTML() {
 						</a>
 					</body>
 				</html>
-				',
+				`,
 			expected: 	[]string{"https://blog.boot.dev/path/one","https://other.com/path/one"},
 		},{
-			name: 		"absolute and relative URLs",
+			name: 		"absolute URLs",
 			inputURL: 	"https://blog.boot.dev",
-			inputBody: '
+			inputBody: `
 				<html>
 					<body>
-						<a href="/path/one">
+						<a href="https://blog.boot.dev/path/one">
 							<span>Boot.dev</span>
 						</a>
 						<a href="https://other.com/path/one">
@@ -43,7 +43,7 @@ func TestgetURLsFromHTML() {
 						</a>
 					</body>
 				</html>
-				',
+				`,
 			expected: 	[]string{"https://blog.boot.dev/path/one","https://other.com/path/one"},
 		},
 	}
@@ -52,10 +52,10 @@ func TestgetURLsFromHTML() {
 		t.Run(tc.name, func (t *testing.T) {
 			actual, err := getURLsFromHTML(tc.inputBody,tc.inputURL)
 			if err != nil {
-				t.Error("Test %v - '%s' FAIL: unexpected error %v", i, tc.name, err)
+				t.Errorf("Test %v - '%s' FAIL: unexpected error %v", i, tc.name, err)
 			}
-			if DeepEqual(actual,tc.expected){
-				t.Error("Test %v - %s FAIL: unexpected URL(s): %v, actual %v", i, tc.name, tc.expected, actual)
+			if reflect.DeepEqual(actual,tc.expected){
+				t.Errorf("Test %v - %s FAIL: unexpected URL(s): %v, actual %v", i, tc.name, tc.expected, actual)
 			}
 		})
 	}
